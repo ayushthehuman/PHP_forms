@@ -1,60 +1,28 @@
 <?php
-$res = 0;
-$error = '';
-$hour = $_POST['hours'];
-$sel = $_POST['check'];
-// echo $hour;
-if (!empty($hour)) {
-    if ($sel == 'min') {
-        $res = ($hour * 60);
-    } elseif ($sel == 'sec') {
-        $res = ($hour * 60 * 60);
-    }
+if(isset($_FILES['fileToUpload'])){
+//     echo "<pre>";
+//     print_r($_FILES);
+//     echo "</pre>";
+//     echo $_FILES["fileToUpload"]["type"];
+//    echo $_FILES["fileToUpload"]["size"];
+if($_FILES["fileToUpload"]["type"]=="image/png" && $_FILES["fileToUpload"]["size"]<= (2*1000000)){
+if (move_uploaded_file($_FILES["fileToUpload"]["tmp_name"],"uploads/".$_FILES["fileToUpload"]["name"])) {
+    echo "The file has been uploaded.";
+  } else {
+    echo "Sorry, there was an error uploading your file.";
+  }
+}else{
+    echo "enter valid image";
+}
 }
 ?>
-
-<!DOCTYPE html>
-<html lang="en">
-
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Conversion</title>
-</head>
-<style>
-    .radio {
-        padding: 13px 33px;
-        margin: 11px 138px;
-    }
-
-    .res {
-        padding: 21px 48px;
-        margin: 5px 124px;
-    }
-
-    .button {
-        padding: 11px 16px;
-        margin: 5px 188px;
-    }
-</style>
-
-<body>
-    <div id="wrapper">
-        <form action="" method="POST">
-            Enter Value in Hours: <input type="number" name="hours" value=""><br>
-            <div class="radio">
-                <input type="radio" name="check" value="min">Hours to Min<br>
-                <input type="radio" name="check" value="sec">Hours to Sec<br>
-            </div>
-            <div class="res">
-                <?php echo $hour . " Hour = " . $res . $sel; ?><br>
-            </div>
-            <div class="button">
-                <input type="Submit" name="submit" value="Convert"><br>
-            </div>
-        </form>
-    </div>
-</body>
-
+<html>
+   <body>
+      
+      <form action="" method="POST" enctype="multipart/form-data">
+         <input type="file" name="fileToUpload" />
+         <input type="submit" value="Upload Image" name="submit"/>
+      </form>
+      
+   </body>
 </html>
