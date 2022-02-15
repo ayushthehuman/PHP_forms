@@ -1,17 +1,18 @@
 <?php
-$area = 0;
-$perimeter = 0;
-$f_len = "";
-$f_bre = "";
-if (isset($_POST['f_button'])) {
-    $f_len = $_POST['f_len'];
-    $f_bre = $_POST['f_bre'];
-    // Area formula
-    $area = $f_len * $f_bre;
-    // Perimeter formula
-    $perimeter = 2 * ($f_len + $f_bre);
+$res = 0;
+$error = '';
+$hour = $_POST['hours'];
+$sel = $_POST['check'];
+// echo $hour;
+if (!empty($hour)) {
+    if ($sel == 'min') {
+        $res = ($hour * 60);
+    } elseif ($sel == 'sec') {
+        $res = ($hour * 60 * 60);
+    }
 }
 ?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -19,45 +20,41 @@ if (isset($_POST['f_button'])) {
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Area And Perimeter</title>
-    <style>
-        #wrapper {
-            background-color: grey;
-            width: 80%;
-            padding: 16px 50px;
-        }
-
-        .len {
-            padding: 2px 8px;
-        }
-
-        .bre {
-            padding: 1px 0px;
-            margin: 6px 0px;
-        }
-
-        .cal {
-            padding: 8px 11px;
-            margin: 6px 61px;
-        }
-    </style>
+    <title>Conversion</title>
 </head>
+<style>
+    .radio {
+        padding: 13px 33px;
+        margin: 11px 138px;
+    }
+
+    .res {
+        padding: 21px 48px;
+        margin: 5px 124px;
+    }
+
+    .button {
+        padding: 11px 16px;
+        margin: 5px 188px;
+    }
+</style>
 
 <body>
     <div id="wrapper">
         <form action="" method="POST">
-            <div class="len">
-
-                <b>Length : </b><input type="number" name="f_len" value="<?php echo $f_len; ?>" </div>
-                <div class="bre">
-
-                    <b>Breadth : </b><input type="number" name="f_bre" value="<?php echo $f_bre; ?>" </div>
-                    <div class="cal">
-
-                        <input type="Submit" name="f_button" value="calculate Area and Perimeter" </div>
-                    </div>
-                    <?php echo "<b>Area is</b> " . $area . "<b> sq. mtr.</b>"; ?><br>
-                    <?php echo "<b>Perimeter is</b> " . $perimeter . " <b>mtr.</b>"; ?>
+            Enter Value in Hours: <input type="number" name="hours" value=""><br>
+            <div class="radio">
+                <input type="radio" name="check" value="min">Hours to Min<br>
+                <input type="radio" name="check" value="sec">Hours to Sec<br>
+            </div>
+            <div class="res">
+                <?php echo $hour . " Hour = " . $res . $sel; ?><br>
+            </div>
+            <div class="button">
+                <input type="Submit" name="submit" value="Convert"><br>
+            </div>
+        </form>
+    </div>
 </body>
 
 </html>
