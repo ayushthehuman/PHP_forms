@@ -1,23 +1,15 @@
 <?php
-$f_num = $_POST['f_num'];
-$f_sec = $_POST['f_sec'];
-$operator = $_POST['operator'];
-$result = '';
-if (is_numeric($f_num) && is_numeric($f_sec)) {
-    switch ($operator) {
-        case "+":
-            $result = $f_num + $f_sec;
-            break;
-        case "-":
-            $result = $f_num - $f_sec;
-            break;
-        case "*":
-            $result = $f_num * $f_sec;
-            break;
-        case "/":
-            $result = $f_num / $f_sec;
-            break;
-    }
+$area = 0;
+$perimeter = 0;
+$f_len = "";
+$f_bre = "";
+if (isset($_POST['f_button'])) {
+    $f_len = $_POST['f_len'];
+    $f_bre = $_POST['f_bre'];
+    // Area formula
+    $area = $f_len * $f_bre;
+    // Perimeter formula
+    $perimeter = 2 * ($f_len + $f_bre);
 }
 ?>
 <!DOCTYPE html>
@@ -27,27 +19,26 @@ if (is_numeric($f_num) && is_numeric($f_sec)) {
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <!-- <link rel="stylesheet" href="calculator.css"> -->
-    <title>Calculator using PHP</title>
+    <title>Area And Perimeter</title>
     <style>
         #wrapper {
             background-color: grey;
-            width: 60%;
-            padding: 3px 56px;
+            width: 80%;
+            padding: 16px 50px;
         }
 
-        .second {
-            padding: 3px 0px;
+        .len {
+            padding: 2px 8px;
         }
 
-        .res {
-
-            padding: 2px 4px;
-            margin: 1px 15px;
+        .bre {
+            padding: 1px 0px;
+            margin: 6px 0px;
         }
 
-        .op {
-            padding: 9px 63px;
+        .cal {
+            padding: 8px 11px;
+            margin: 6px 61px;
         }
     </style>
 </head>
@@ -55,20 +46,18 @@ if (is_numeric($f_num) && is_numeric($f_sec)) {
 <body>
     <div id="wrapper">
         <form action="" method="POST">
-            <div class="first">
-                <b>Number1 : </b><input type="number" name="f_num" value="<?php echo $f_num; ?>" </div>
-                <div class="second">
-                    <b>Number2 : </b><input type="number" name="f_sec" value="<?php echo $f_sec; ?>" </div>
-                    <div class="res">
-                        <b>Result = </b><input readonly="readonly" name="f_res" value="<?php echo $result; ?>" </div>
-                        <div class="op">
-                            <input type="submit" name="operator" value="+">
-                            <input type="submit" name="operator" value="-">
-                            <input type="submit" name="operator" value="*">
-                            <input type="submit" name="operator" value="/">
-                        </div>
-        </form>
-    </div>
+            <div class="len">
+
+                <b>Length : </b><input type="number" name="f_len" value="<?php echo $f_len; ?>" </div>
+                <div class="bre">
+
+                    <b>Breadth : </b><input type="number" name="f_bre" value="<?php echo $f_bre; ?>" </div>
+                    <div class="cal">
+
+                        <input type="Submit" name="f_button" value="calculate Area and Perimeter" </div>
+                    </div>
+                    <?php echo "<b>Area is</b> " . $area . "<b> sq. mtr.</b>"; ?><br>
+                    <?php echo "<b>Perimeter is</b> " . $perimeter . " <b>mtr.</b>"; ?>
 </body>
 
 </html>
