@@ -1,35 +1,23 @@
-<!-- Program 1 -->
 <?php
-// $result_str = $result='';
-if (isset($_POST['unit-submit'])) { //Submit 
-    $units = $_POST['units'];      //Input type  
-    if (!empty($units)) {
-        $result = cal_bill($units);
-        $result_str = 'Total ammount of ' . $units . ' = ' . $result;
+$f_num = $_POST['f_num'];
+$f_sec = $_POST['f_sec'];
+$operator = $_POST['operator'];
+$result = '';
+if (is_numeric($f_num) && is_numeric($f_sec)) {
+    switch ($operator) {
+        case "+":
+            $result = $f_num + $f_sec;
+            break;
+        case "-":
+            $result = $f_num - $f_sec;
+            break;
+        case "*":
+            $result = $f_num * $f_sec;
+            break;
+        case "/":
+            $result = $f_num / $f_sec;
+            break;
     }
-}
-function cal_bill($units)
-{
-    $unitfirst = 3.50;
-    $unitsecond = 4.00;
-    $unitthird = 5.20;
-    $unitfourth = 6.50;
-    if ($units <= 50) {
-        $bill = $units * $unitfirst;
-    } elseif ($units > 50 && $units <= 100) {
-        $temp = $units * $unitfirst;
-        $remaining_units = $units - 50;
-        $bill = $temp + ($remaining_units * $unitsecond);
-    } elseif ($units > 100 && $units <= 200) {
-        $temp = (50 * 3.5) + (100 * $unitsecond);
-        $remaining_units = $units - 150;
-        $bill = $temp + ($remaining_units * $unitthird);
-    } else {
-        $temp = (50 * 3.5) + (100 * $unitsecond) + (100 * $unitthird);
-        $remaining_units = $units - 250;
-        $bill = $temp + ($remaining_units * $unitfourth);
-    }
-    return number_format((float)$bill, 2, '.', '');
 }
 ?>
 <!DOCTYPE html>
@@ -39,19 +27,48 @@ function cal_bill($units)
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Electricity_Bill Using PHP</title>
+    <!-- <link rel="stylesheet" href="calculator.css"> -->
+    <title>Calculator using PHP</title>
+    <style>
+        #wrapper {
+            background-color: grey;
+            width: 60%;
+            padding: 3px 56px;
+        }
+
+        .second {
+            padding: 3px 0px;
+        }
+
+        .res {
+
+            padding: 2px 4px;
+            margin: 1px 15px;
+        }
+
+        .op {
+            padding: 9px 63px;
+        }
+    </style>
 </head>
 
 <body>
     <div id="wrapper">
-        <h3>Program to calculate Electricity bill in PHP</h3>
-        <form action="" method="post">
-            <input type="number" name="units" placeholder="Enter your no. of units">
-            <input type="submit" name="unit-submit" value="Submit">
+        <form action="" method="POST">
+            <div class="first">
+                <b>Number1 : </b><input type="number" name="f_num" value="<?php echo $f_num; ?>" </div>
+                <div class="second">
+                    <b>Number2 : </b><input type="number" name="f_sec" value="<?php echo $f_sec; ?>" </div>
+                    <div class="res">
+                        <b>Result = </b><input readonly="readonly" name="f_res" value="<?php echo $result; ?>" </div>
+                        <div class="op">
+                            <input type="submit" name="operator" value="+">
+                            <input type="submit" name="operator" value="-">
+                            <input type="submit" name="operator" value="*">
+                            <input type="submit" name="operator" value="/">
+                        </div>
         </form>
     </div>
-    <div>
-        <?php echo '<br />' . $result_str; ?>
 </body>
 
 </html>
